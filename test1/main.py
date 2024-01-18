@@ -1,14 +1,19 @@
 import pandas as pd
 from neo4j import GraphDatabase
+from dotenv import load_dotenv
+import os
+
+# load .env
+load_dotenv()
 
 # CSV 파일 읽기
 csv_file = 'relationaccount.csv'  # CSV 파일 경로
 df = pd.read_csv(csv_file)
 
 # Neo4j 연결 설정
-uri = "neo4j+s://7.databases.neo4j.io"  # Neo4j URI
-username = "neo4j"  # Neo4j 사용자 이름
-password = "s"  # Neo4j 비밀번호
+uri = os.environ.get('uri')
+username = os.environ.get('username')
+password = os.environ.get('password')
 driver = GraphDatabase.driver(uri, auth=(username, password))
 
 # 노드 생성 쿼리 실행 함수
